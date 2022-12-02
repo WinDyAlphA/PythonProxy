@@ -11,18 +11,20 @@ counter = 0
 
 def rechercherTitre(str):
     lines = str.split('\n')
+    objectif = "title="
     for line in lines:
-        if line.contains('title'):
-            print(line)
+        if line.find(objectif) != -1:
+            # split on title and print the second part
+            result = line.split(objectif)[1]
+            print(result.split(">")[0])
 
 
 for site in site_to_check:
     try:
-        print('proxy : {proxy}'.format(proxy=proxies[counter]))
+        print('-------------> proxy : {proxy}'.format(proxy=proxies[counter]))
         res = requests.get(
             site, proxies={'http': proxies[counter], 'https': proxies[counter]})
-        print(res.status_code)
-        print(res.text)
+        rechercherTitre(res.text)
 
     except:
         print('failed for : {proxy}'.format(proxy=proxies[counter]))
